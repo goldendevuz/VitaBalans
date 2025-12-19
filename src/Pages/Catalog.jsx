@@ -180,7 +180,7 @@ function Catalog() {
                         : 'transparent',
                       color: selectedCategory === cat.id ? '#059669' : '#475569',
                       fontWeight: selectedCategory === cat.id ? '600' : '500',
-                      fontSize: '0.92rem',
+                      fontSize: '15px',
                       cursor: 'pointer',
                       textAlign: 'left',
                       transition: 'all 0.2s',

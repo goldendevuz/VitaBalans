@@ -6,16 +6,16 @@ function About() {
     <div className="container" style={{ padding: '60px 24px' }}>
       <section className="about-hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 420px', gap: 32, alignItems: 'center' }}>
         <div>
-          <h1>Biz haqimizda</h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginTop: 12 }}>
-            VitaBalans — tabiiy vitaminlar va qo'shimchalar ishlab chiqaruvchi kompaniya. Biz sifat,
-            ishonchlilik va shaffoflikni birinchi o'ringa qo'yamiz. Har bir mahsulotimiz sinovlardan o'tgan
+          <h1 style={{ fontSize: '1.6rem', marginBottom: 6 }}>Biz haqimizda</h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: 6, lineHeight: 1.6 }}>
+            VitaBalans — tabiiy vitaminlar va qo'shimchalar ishlab chiqaruvchi kompaniya. Biz sifat, ishonchlilik
+            va shaffoflikni birinchi o'ringa qo'yamiz. Har bir mahsulotimiz mustaqil sinovlardan o'tgan
             ingredientlardan tayyorlanadi va sog'liqni qo'llab-quvvatlashga mo'ljallangan.
           </p>
 
-          <div style={{ display: 'flex', gap: 12, marginTop: 20, flexWrap: 'wrap' }}>
-            <button className="btn primary">Mahsulotlarni ko'rish</button>
-            <a href="#contact" className="btn outline" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>Bog'lanish</a>
+          <div style={{ display: 'flex', gap: 12, marginTop: 16, flexWrap: 'wrap', alignItems: 'center' }}>
+            <button className="btn primary" style={{ padding: '10px 16px', fontSize: '0.95rem' }}>Mahsulotlarni ko'rish</button>
+            <a href="#contact" className="btn outline" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 14px', fontSize: '0.95rem' }}>Bog'lanish</a>
           </div>
         </div>
 

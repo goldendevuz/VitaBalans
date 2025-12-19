@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './Components/Layout'
+import ScrollToTop from './Components/ScrollToTop'
 import Home from './Pages/Home'
 import Login from './Pages/Login'
 import Register from './Pages/Register'
@@ -19,6 +20,7 @@ function App() {
     <AuthProvider>
       <CartProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

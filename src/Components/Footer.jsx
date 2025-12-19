@@ -84,13 +84,13 @@ function Footer() {
           <h4>Aloqa</h4>
           <div className="footer-links">
             <a href="tel:+998901234567" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <FaPhone /> +998 90 123 45 67
+              <FaPhone /> +998 93 419 09 03
             </a>
             <a href="mailto:info@vitabalans.uz" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <FaEnvelope /> info@vitabalans.uz
             </a>
             <span style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <FaMapMarkerAlt /> Toshkent, O'zbekiston
+              <FaMapMarkerAlt /> Namagan, O'zbekiston
             </span>
 
             <div className="footer-social-mobile" style={{ display: 'none', gap: '12px', marginTop: '12px' }}>

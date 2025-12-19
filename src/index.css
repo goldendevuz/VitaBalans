@@ -414,8 +414,8 @@ h4 {
 
   /* increase logo slightly on small screens for visibility */
   .logo {
-    height: 48px;
-    width: 48px;
+    height: 56px;
+    width: 56px;
   }
 }
 
@@ -1855,7 +1855,7 @@ label {
     width: 340px;
   }
   .info{
-    font-size: 3px;
+    font-size: 9px;
   }
 
   .mobile-bottom-nav .mobile-icon {
