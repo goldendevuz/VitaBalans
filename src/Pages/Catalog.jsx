@@ -335,12 +335,15 @@ function Catalog() {
           .catalog-main-grid {
             grid-template-columns: 1fr !important;
           }
+          /* Show categories first on small screens (tepadan) so the menu appears above products */
           .catalog-sidebar-box {
             position: static !important;
-            order: 2;
+            order: 1;
+            max-height: none !important;
+            overflow: visible !important;
           }
           .catalog-products-area {
-            order: 1;
+            order: 2;
           }
         }
       `}</style>

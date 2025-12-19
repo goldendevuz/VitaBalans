@@ -186,9 +186,9 @@ h4 {
 }
 
 .logo {
-  /* Make logo smaller and neat in the header */
-  height: 36px;
-  width: 36px;
+  /* Slightly larger logo for clearer branding */
+  height: 44px;
+  width: 44px;
   object-fit: contain;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
@@ -401,6 +401,22 @@ h4 {
     width: 44px;
     height: 44px;
   }
+
+  /* On small screens show only the logo and the mobile menu button; hide other header actions (cart, profile, login) */
+  .header-actions > :not(.mobile-menu) {
+    display: none !important;
+  }
+
+  /* keep only the logo (hide brand text) to save space */
+  .brand-text {
+    display: none !important;
+  }
+
+  /* increase logo slightly on small screens for visibility */
+  .logo {
+    height: 48px;
+    width: 48px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -464,8 +480,8 @@ h4 {
 /* ===== Hero Section ===== */
 .hero {
   background: var(--gradient-hero);
-  padding: 60px 0;
-  min-height: 500px;
+  padding: clamp(32px, 6vw, 60px) 0;
+  min-height: clamp(360px, 45vh, 500px);
   display: flex;
   align-items: center;
   position: relative;
@@ -1802,4 +1818,158 @@ label {
 /* show mobile logo on small screens */
 @media (max-width: 768px) {
   .mobile-logo { display: block !important; }
+}
+
+/* ===== Mobile Bottom Navigation ===== */
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    gap: 10px;
+    width: 100%;
+    height: 64px;
+    background: white;
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -8px 20px rgba(15,23,42,0.04);
+    align-items: center;
+    justify-content: space-around;
+    padding: env(safe-area-inset-bottom, 8px) 8px 8px;
+    z-index: 120;
+  }
+
+  .mobile-bottom-nav .mobile-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-muted);
+    font-size: 11px;
+    text-decoration: none;
+    width: 340px;
+  }
+  .info{
+    font-size: 10px;
+  }
+
+  .mobile-bottom-nav .mobile-icon {
+    font-size: 18px;
+    color: inherit;
+    line-height: 1;
+  }
+
+  .mobile-bottom-nav .mobile-item.active {
+    color: var(--primary-600);
+  }
+
+  /* avoid footer overlap: give a bottom padding to body content when mobile nav is present */
+  body {
+    padding-bottom: 80px;
+  }
+}
+
+/* Homepage text and button tweaks for tablet/mobile */
+@media (max-width: 900px) {
+  .hero-content h1 {
+    font-size: clamp(1.6rem, 2rem + 0.6vw, 2.4rem);
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+    margin-bottom: 18px;
+  }
+
+  .hero-actions {
+    gap: 10px;
+  }
+
+  .hero .btn.primary,
+  .hero .btn.secondary,
+  .container .btn.primary {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+
+  /* Search area adjustments */
+  section .container form {
+    padding: 0 8px;
+  }
+
+  section .container input[type="text"] {
+    font-size: 0.95rem;
+    padding: 12px 12px 12px 48px;
+  }
+
+  .products h2 {
+    font-size: 1.2rem;
+  }
+
+  /* CTA banner smaller on mobile */
+  section[style*="linear-gradient(135deg, #10b981"] {
+    padding: 40px 0;
+  }
+
+  section[style*="linear-gradient(135deg, #10b981"] h2 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-content h1 {
+    font-size: 1.4rem;
+  }
+
+  .hero-content p {
+    font-size: 0.95rem;
+  }
+
+  .hero-image {
+    width: clamp(140px, 36vw, 220px);
+    height: auto;
+    padding: 12px;
+  }
+
+  .hero-actions .btn {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .products .grid {
+    gap: 12px;
+  }
+}
+
+/* Force header to be compact on small screens and defer navigation to bottom nav */
+@media (max-width: 900px) {
+  /* Hide the main nav and burger on small screens so header only shows logo */
+  .main-nav {
+    display: none !important;
+  }
+
+  .mobile-menu {
+    display: none !important;
+  }
+
+  /* keep header compact */
+  .site-header {
+    padding: 6px 0;
+  }
+
+  .header-inner {
+    padding: 8px 16px;
+    gap: 12px;
+  }
+
+  /* reduce header action icon sizes slightly */
+  .header-actions .icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
 }

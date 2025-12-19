@@ -182,13 +182,28 @@ function Home() {
       <section className="products container">
         <h2>Mashhur Mahsulotlar</h2>
         <div className="grid">
-          {products.slice(0, 4).map(p => (
+          {products.slice(0, 6).map(p => (
             <ProductCard key={p.id} product={p} />
           ))}
         </div>
         <div style={{ textAlign: 'center', marginTop: '40px' }}>
           <Link to="/catalog" className="btn primary">
             Barcha mahsulotlar <FaArrowRight />
+          </Link>
+        </div>
+      </section>
+
+      {/* New Arrivals - makes the homepage longer */}
+      <section className="products container" style={{ paddingTop: '40px' }}>
+        <h2>Yangi kelganlar</h2>
+        <div className="grid">
+          {products.slice(6, 12).map(p => (
+            <ProductCard key={p.id} product={p} />
+          ))}
+        </div>
+        <div style={{ textAlign: 'center', marginTop: '28px' }}>
+          <Link to="/catalog" className="btn secondary">
+            Barchasini ko'rish <FaArrowRight />
           </Link>
         </div>
       </section>
