@@ -60,16 +60,16 @@ function ProductCard({ product }) {
         </div>
       )}
 
-      <Link to={`/product/${product.id}`} className="card" style={{ textDecoration: 'none' }}>
+      <Link to={`/product/${product.id}`} className="card" style={{ textDecoration: 'none', background: '#e2e8f0', border: '1px solid rgba(15,23,42,0.06)', boxShadow: '0 6px 18px rgba(2,6,23,0.06)' }}>
         {/* Quick Add Button */}
         <button className="top-action" onClick={handleAdd} aria-label="Savatga qo'shish">
           <FaShoppingCart style={{ marginRight: '6px' }} />
           Savatga
         </button>
 
-        {/* Product Image */}
-        <div className="card-image-wrapper">
-          <img src={product.image} alt={product.title} className="card-image" />
+        {/* Product Image (use background with darker overlay) */}
+        <div className="card-image-wrapper" style={{ padding: 8 }}>
+          <img src={product.image} alt={product.title} style={{ width: '100%', height: 160, objectFit: 'cover', borderRadius: 12, display: 'block', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.02)' }} />
         </div>
 
         {/* Product Info */}

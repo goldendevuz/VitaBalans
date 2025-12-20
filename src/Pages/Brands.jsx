@@ -7,13 +7,15 @@ import Loader from '../Components/Loader'
 
 function Brands() {
   const brands = [
-    { id: 'b1', name: 'VitaBalans', img: logo },
-    { id: 'b2', name: 'NaturePlus', img: logo },
-    { id: 'b3', name: 'HerbaCare', img: logo },
-    { id: 'b4', name: 'WellnessCo', img: logo },
-    { id: 'b5', name: 'PureLabs', img: logo },
-    { id: 'b6', name: 'GreenLeaf', img: logo }
+    { id: 'b1', name: 'VitaBalans' },
+    { id: 'b2', name: 'NaturePlus' },
+    { id: 'b3', name: 'HerbaCare' },
+    { id: 'b4', name: 'WellnessCo' },
+    { id: 'b5', name: 'PureLabs' },
+    { id: 'b6', name: 'GreenLeaf' }
   ]
+
+  const brandColors = ['#10b981', '#f97316', '#06b6d4', '#7c3aed', '#f59e0b', '#ef4444']
 
   const [loading, setLoading] = useState(true)
 
@@ -37,9 +39,9 @@ function Brands() {
           spaceBetween={24}
           slidesPerView={4}
           loop={true}
-          autoplay={{ delay: 0, disableOnInteraction: false, pauseOnMouseEnter: true }}
-          speed={4000}
-          allowTouchMove={true}
+          autoplay={{ delay: 1, disableOnInteraction: false, pauseOnMouseEnter: false, waitForTransition: false }}
+          speed={5000}
+          allowTouchMove={false}
           onInit={(swiper) => {
             // enforce linear transition for continuous feel
             const wrapper = swiper.el.querySelector('.swiper-wrapper')
@@ -52,11 +54,11 @@ function Brands() {
             1024: { slidesPerView: 4 }
           }}
         >
-          {brands.map((b) => (
+          {brands.map((b, idx) => (
             <SwiperSlide key={b.id}>
               <div className="brand-slide" style={{ padding: 12, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <div style={{ width: 160, textAlign: 'center' }}>
-                  <img src={b.img} alt={b.name} style={{ width: '100%', height: 80, objectFit: 'contain', borderRadius: 8, background: '#fff', padding: 8 }} />
+                <div style={{ width: 160, textAlign: 'center', background: '#e2e8f0', padding: 12, borderRadius: 10, border: '1px solid rgba(15,23,42,0.06)', boxShadow: '0 6px 18px rgba(2,6,23,0.04)' }}>
+                  <img src={logo} alt={b.name} style={{ width: '100%', height: 80, objectFit: 'contain', borderRadius: 8, backgroundColor: brandColors[idx % brandColors.length] }} />
                   <div style={{ marginTop: 8, color: '#0f172a', fontWeight: 600 }}>{b.name}</div>
                 </div>
               </div>
