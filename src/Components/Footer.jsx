@@ -83,9 +83,6 @@ function Footer() {
         <div className="footer-section footer-contact">
           <h4>Aloqa</h4>
           <div className="footer-links">
-            <a href="tel:+998901234567" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <FaPhone /> +998 93 419 09 03
-            </a>
             <a href="mailto:info@vitabalans.uz" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <FaEnvelope /> info@vitabalans.uz
             </a>

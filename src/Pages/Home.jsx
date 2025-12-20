@@ -27,7 +27,7 @@ function Home() {
   ]
 
   return (
-    <div>
+    <div className="home">
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-slider">

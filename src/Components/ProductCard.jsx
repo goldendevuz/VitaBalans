@@ -9,6 +9,8 @@ function ProductCard({ product }) {
   const { add } = useContext(CartContext)
   const { user } = useContext(AuthContext)
   const nav = useNavigate()
+  // Default exchange rate: 1 USD -> 11500 UZS (adjustable)
+  const EXCHANGE_RATE = 11500
 
   const handleAdd = (e) => {
     e.preventDefault()
@@ -60,7 +62,7 @@ function ProductCard({ product }) {
 
       <Link to={`/product/${product.id}`} className="card" style={{ textDecoration: 'none' }}>
         {/* Quick Add Button */}
-        <button className="top-action" onClick={handleAdd} aria-label="Add to cart">
+        <button className="top-action" onClick={handleAdd} aria-label="Savatga qo'shish">
           <FaShoppingCart style={{ marginRight: '6px' }} />
           Savatga
         </button>
@@ -75,14 +77,15 @@ function ProductCard({ product }) {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
               {product.category && <span className="chip">{product.category}</span>}
-              {product.rating >= 4.8 && <span className="badge-top">Bestseller</span>}
+              {product.rating >= 4.8 && <span className="badge-top">Eng ko'p sotilgan</span>}
             </div>
             <div style={{ color: 'var(--text-muted)', fontSize: 12 }}>{product.weight || ''}</div>
           </div>
 
           <h3 className="card-title">{product.title}</h3>
           <p className="card-description">{product.description}</p>
-          <p className="card-price">${product.price.toFixed(2)}</p>
+          {/** Convert USD price to UZS and display without $ sign */}
+          <p className="card-price">{Math.round(product.price * EXCHANGE_RATE).toLocaleString('uz-UZ')} so'm</p>
           <div className="card-footer">
             <div className="rating">
               <FaStar color="#f5b50a" />

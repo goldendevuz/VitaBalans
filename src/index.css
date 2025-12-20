@@ -619,13 +619,26 @@ h4 {
 /* ===== Product Grid & Card ===== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 240px)); /* keep nice card sizing but allow flexibility */
+  gap: 28px; /* increased gap for more breathing room */
+  justify-content: center; /* center columns when row isn't full */
+}
+
+/* Homepage-specific larger catalog layout */
+.home .grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
+  gap: 36px;
+  justify-content: center;
+}
+
+.home .card {
+  width: 280px; /* slightly larger cards on homepage */
+  min-height: 360px;
 }
 
 /* Add horizontal breathing room so cards don't touch viewport edges */
 .grid {
-  padding-inline: 12px;
+  padding-inline: 20px;
   box-sizing: border-box;
 }
 
@@ -644,6 +657,8 @@ h4 {
   box-shadow: var(--shadow-card);
   transition: transform var(--transition-base), box-shadow var(--transition-base);
   color: inherit;
+  min-height: 320px; /* ensure consistent card heights for grid rows */
+  width: 240px; /* fixed width to match grid column width */
 }
 
 .card:hover {
@@ -659,6 +674,13 @@ h4 {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .hero-image {
@@ -680,11 +702,19 @@ h4 {
   color: var(--text-primary);
 }
 
+/* make card body expand so footers align at the bottom */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 16px;
+}
+
 .card-description {
   color: var(--text-muted);
   font-size: 0.9rem;
   margin: 0;
-  min-height: 36px;
+  min-height: 48px;
 }
 
 .card-price {
@@ -698,19 +728,28 @@ h4 {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
+  margin-top: auto;
 }
 
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 20px;
+  }
+
+  .card {
+    width: auto; /* allow cards to fill available column on tablet and below */
   }
 }
 
 @media (max-width: 600px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 16px;
+  }
+
+  .card {
+    width: auto;
   }
 
   /* Smaller product cards on mobile */
@@ -788,7 +827,11 @@ h4 {
 @media (max-width: 400px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    gap: 12px;
+  }
+
+  .card {
+    min-height: auto; /* let cards size naturally on very small screens */
   }
 
   .card-image-wrapper {

@@ -139,8 +139,8 @@ function Catalog() {
       <div className="container" style={{ padding: '40px 24px 80px' }}>
         <div className="catalog-main-grid" style={{
           display: 'grid',
-          gridTemplateColumns: '280px 1fr',
-          gap: '32px',
+          gridTemplateColumns: '260px 1fr',
+          gap: '28px',
           alignItems: 'start'
         }}>
           {/* Sidebar - Left */}
