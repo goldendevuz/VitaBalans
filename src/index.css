@@ -585,7 +585,7 @@ h4 {
   background: var(--gradient-hero);
   /* Revert to light gradient */
   border-radius: 20px;
-  padding: 20px;
+  padding: 80px 32px 30px 32px;
   position: relative;
   overflow: hidden;
   position: relative;
@@ -599,7 +599,7 @@ h4 {
 .hero {
   background: white;
   /* Reset outer section */
-  padding: 10px 0;
+  padding: 20px 0;
   /* Slimmer outer padding */
   min-height: auto;
 }
@@ -616,6 +616,8 @@ h4 {
   background: #10b981;
   color: white;
   border-radius: 30px;
+  padding: 8px 24px;
+  font-size: 0.9rem;
 }
 
 .hero-slider {
@@ -757,9 +759,11 @@ h4 {
 }
 
 .slide-image .hero-image {
-  width: 100% !important;
+  width: auto !important;
+  max-width: 100% !important;
   height: auto !important;
-  object-fit: cover !important;
+  max-height: 260px !important;
+  object-fit: contain !important;
   border-radius: 10px !important;
 }
 
@@ -897,8 +901,9 @@ h4 {
   }
 
   .slide .hero-image {
-    max-height: 180px;
+    max-height: 240px;
     width: auto;
+    margin-top: 90px !important;
     margin: 0 auto;
   }
 
@@ -915,7 +920,7 @@ h4 {
   }
 
   .slide .hero-image {
-    max-height: 130px;
+    max-height: 160px;
   }
 
   .hero-content h1 {
@@ -1199,8 +1204,8 @@ h4 {
   .hero-actions .btn {
     width: calc(100% - 32px) !important;
     max-width: 420px !important;
-    padding: 10px 12px !important;
-    font-size: 0.95rem !important;
+    padding: 4px 8px !important;
+    font-size: 0.75rem !important;
   }
 
   /* Compact search layout for phone remains */
@@ -1329,6 +1334,7 @@ h4 {
     width: 92% !important;
     max-width: 420px !important;
     height: auto !important;
+    max-height: 220px !important;
     object-fit: contain !important;
     border-radius: 10px !important;
     padding: 0 !important;
@@ -1341,13 +1347,13 @@ h4 {
     width: 100% !important;
     max-width: 100% !important;
     padding: 0 12px !important;
-    text-align: center !important;
-    align-items: center !important;
+    text-align: left !important;
+    align-items: flex-start !important;
   }
 
   .hero-content h1,
   .slide .hero-title {
-    font-size: 1rem !important;
+    font-size: 0.8rem !important;
     line-height: 1.1 !important;
     margin-bottom: 4px !important;
   }
@@ -1357,17 +1363,17 @@ h4 {
     display: flex !important;
     flex-direction: column !important;
     gap: 8px !important;
-    align-items: center !important;
-    justify-content: center !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
     padding: 6px 0 !important;
   }
 
   .hero-actions .btn {
     width: auto !important;
-    min-width: 120px;
-    max-width: 240px !important;
-    padding: 6px 10px !important;
-    font-size: 0.8rem !important;
+    min-width: 100px;
+    max-width: 180px !important;
+    padding: 4px 8px !important;
+    font-size: 0.7rem !important;
   }
 
   .hero-chip {
@@ -1462,8 +1468,8 @@ h4 {
 
 @media (max-width: 360px) {
   .hero.phone-dark .hero-actions .btn {
-    padding: 6px 8px !important;
-    font-size: 0.85rem !important;
+    padding: 5px 7px !important;
+    font-size: 10px !important;
   }
 }
 
@@ -1616,6 +1622,12 @@ h4 {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
+}
+
+.product-image img {
+  max-height: 200px !important;
+  width: auto !important;
+  margin: 0 auto;
 }
 
 /* Feature cards: on small screens make them stack vertically and become full-width (long) */
@@ -3876,10 +3888,17 @@ label {
 }
 
 .cta-banner .cta-btn {
-  background: white;
-  color: var(--primary-600);
+  background: transparent;
+  border: 2px solid white;
+  color: white;
   padding: 12px 28px;
   font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.cta-banner .cta-btn:hover {
+  background: white;
+  color: var(--primary-600);
 }
 
 @media (max-width: 900px) {
@@ -4044,4 +4063,34 @@ label {
   align-items: center;
   gap: 8px;
   color: var(--text-muted);
+}
+
+/* Desktop: add vertical offset so hero slide text and image start lower */
+@media (min-width: 900px) {
+  .hero-inner {
+    padding-top: 24px !important;
+  }
+
+  .slide {
+    align-items: flex-start !important;
+    /* move content toward top */
+    padding-top: 20px !important;
+    padding-bottom: 12px !important;
+  }
+
+  .slide-text {
+    justify-content: flex-start !important;
+    padding-top: 8px !important;
+  }
+
+  .slide-image {
+    align-items: flex-start !important;
+    padding-top: 8px !important;
+  }
+
+  .slide-image .hero-image,
+  .hero-media .hero-image,
+  .hero-image {
+    margin-top: 6px !important;
+  }
 }

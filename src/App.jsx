@@ -45,8 +45,8 @@ function App() {
             <Route path='checkout' element={<Checkout />} />
             <Route path='catalog' element={<Catalog />} />
             <Route path='product/:id' element={<ProductDetail />} />
-            <Route path='*' element={<NotFound />} />
           </Route>
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </>
     )

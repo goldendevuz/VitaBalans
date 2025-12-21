@@ -105,7 +105,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Search Section - Below Banner */}
       <section style={{
         background: 'linear-gradient(135deg, #f8fafc 0%, #ecfdf5 100%)',
         padding: '40px 0'

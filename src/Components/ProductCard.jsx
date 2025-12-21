@@ -87,7 +87,7 @@ function ProductCard({ product }) {
             <button
               className={`btn primary full-width ${product.available ? '' : 'disabled'}`}
               onClick={handleAdd}
-              style={{ padding: '10px 14px' }}
+              style={{ padding: '8px 12px', fontSize: '0.85rem' }}
               disabled={!product.available}
             >
               {product.available ? "Savatga qo'shish" : 'Mavjud emas'}
