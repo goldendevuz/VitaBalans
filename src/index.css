@@ -76,6 +76,8 @@ html {
   scroll-behavior: smooth;
   /* Slightly smaller responsive root font so content fits better on small screens */
   font-size: clamp(13px, 0.85rem + 0.45vw, 16px);
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -85,11 +87,10 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-}
-
-/* Prevent accidental horizontal overflow on small screens and improve touch behavior */
-body {
   overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+  position: relative;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -584,15 +585,13 @@ h4 {
   background: var(--gradient-hero);
   /* Revert to light gradient */
   border-radius: 20px;
-  padding: 20px 32px;
-  /* Slimmer desktop padding */
+  padding: 20px;
   position: relative;
   overflow: hidden;
-  /* Slimmer desktop padding */
   position: relative;
   overflow: hidden;
   /* Match search input width */
-  max-width: 420px;
+  max-width: 430px;
   margin: 0 auto;
   width: 100%;
 }
@@ -1789,7 +1788,6 @@ h4 {
   }
 
   .hero {
-    padding: 6px 0 !important;
     min-height: auto !important;
   }
 
