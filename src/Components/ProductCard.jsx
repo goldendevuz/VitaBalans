@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaStar, FaShoppingCart } from 'react-icons/fa'
 import { CartContext } from '../contexts/CartContext'
@@ -8,6 +8,7 @@ function ProductCard({ product }) {
   const [showNotification, setShowNotification] = useState(false)
   const [notificationMsg, setNotificationMsg] = useState('')
   const [notificationInCard, setNotificationInCard] = useState(false)
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 480 : false)
   const { add } = useContext(CartContext)
   const { user } = useContext(AuthContext)
   const nav = useNavigate()
@@ -19,7 +20,8 @@ function ProductCard({ product }) {
 
     if (!user) {
       setNotificationMsg('Xarid qilish uchun avval platformaga kiring!')
-      setNotificationInCard(true)
+      const showInPlace = !isMobile // on mobile show top-fixed toast, on desktop show in-card
+      setNotificationInCard(showInPlace)
       setShowNotification(true)
       setTimeout(() => setShowNotification(false), 3000)
       return
@@ -31,6 +33,12 @@ function ProductCard({ product }) {
     setTimeout(() => setShowNotification(false), 1500)
   }
 
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 480)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
   const avgRating = product.rating || 4.8
 
   return (
@@ -38,7 +46,7 @@ function ProductCard({ product }) {
       <Link to={`/product/${product.id}`} className="card product-card" style={{ textDecoration: 'none' }}>
         {/* Notification (in-card) */}
         {showNotification && (
-          <div className={`vb-toast in-card`} role="status">
+          <div className={`vb-toast in-card ${notificationInCard ? 'in-place' : 'at-top'}`} role="status">
             <span>{notificationMsg}</span>
             {!user && (
               <Link to="/login" className="vb-toast-cta">Kirish</Link>

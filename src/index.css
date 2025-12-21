@@ -523,20 +523,12 @@ h4 {
 .search-form .search-icon {
   position: absolute;
   left: 14px;
-  color: #94a3b8;
-  font-size: 1.05rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 1rem;
   pointer-events: none;
 }
-
-/* Slightly smaller search input text on narrow screens and clearer focus */
-.search-form input {
-  font-size: 0.95rem;
-}
-
-.search-form:focus-within {
-  box-shadow: 0 6px 24px rgba(16, 185, 129, 0.08);
-}
-
 @media (max-width: 900px) {
   .search-form input {
     width: 100%;
@@ -1610,6 +1602,26 @@ h4 {
   justify-content: center;
   gap: 10px;
   animation: slideDownInCard 0.28s ease;
+}
+
+/* Global top notification used on mobile when user is not logged in */
+.vb-toast.at-top {
+  position: fixed !important;
+  top: 24px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: #fff7c2 !important;
+  color: #1f2937 !important;
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 10px 40px rgba(31, 41, 55, 0.08) !important;
+  z-index: 1200 !important;
+  width: calc(100% - 48px) !important;
+  max-width: 760px !important;
+  display: flex !important;
+  gap: 12px !important;
+  justify-content: space-between !important;
+  animation: slideDown 0.28s ease !important;
 }
 
 @keyframes slideDownInCard {
