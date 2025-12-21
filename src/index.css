@@ -1080,7 +1080,7 @@ h4 {
 
   /* Phone Layout - Compact Dark Banner Style (matching reference) */
   .hero {
-    padding: 12px 0 !important;
+    padding: 6px 0 !important;
     background: white;
     /* Outer background white */
   }
@@ -1090,12 +1090,12 @@ h4 {
     /* Light gradient */
     border-radius: 12px;
     /* Slightly smaller radius for small internal */
-    padding: 10px 12px !important;
+    padding: 8px 10px !important;
     /* Very tight mobile padding */
     position: relative;
     overflow: hidden;
-    width: calc(100% - 24px) !important;
-    max-width: 420px !important;
+    width: 100% !important;
+    max-width: 380px !important;
     margin: 0 auto !important;
   }
 
@@ -1941,7 +1941,7 @@ h4 {
 
 /* Add horizontal breathing room so cards don't touch viewport edges */
 .grid {
-  padding-inline: 20px;
+  padding-inline: 0;
   box-sizing: border-box;
 }
 
@@ -2230,7 +2230,8 @@ h4 {
 @media (max-width: 600px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 10px;
+    padding-inline: 0;
   }
 
   .card {

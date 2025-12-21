@@ -37,7 +37,7 @@ function Home() {
     const results = products.filter(p => p.title && p.title.trim().charAt(0).toLowerCase() === first)
     setSearchResults(results)
   }, [searchQuery])
-  
+
   const features = [
     { icon: <FaLeaf />, title: "100% Tabiiy", desc: "Faqat tabiiy ingredientlar" },
     { icon: <FaHeart />, title: "Sog'liq uchun", desc: "Salomatlik kafolati" },
@@ -73,6 +73,7 @@ function Home() {
                 pagination={{ clickable: true }}
                 loop={true}
                 className="hero-swiper"
+                allowTouchMove={!isPhoneDark}
               >
                 {products.map(p => (
                   <SwiperSlide key={p.id}>
