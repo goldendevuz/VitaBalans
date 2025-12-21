@@ -66,6 +66,22 @@ function ProductDetail() {
 
     return (
         <div className="container" style={{ padding: '40px 24px 80px' }}>
+            {/* JSON-LD Product schema for better indexing */}
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Product",
+                "name": product.title,
+                "image": Array.isArray(product.image) ? product.image : [product.image],
+                "description": product.description,
+                "sku": product.id,
+                "offers": {
+                    "@type": "Offer",
+                    "url": `https://vitabalans.uz/product/${product.id}`,
+                    "priceCurrency": "UZS",
+                    "price": product.price,
+                    "availability": product.available ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+                }
+            }) }} />
             {/* Notification */}
             {showNotification && (
                 <div style={{

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://vitabalans.uz/sitemap.xml
