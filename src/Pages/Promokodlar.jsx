@@ -96,7 +96,7 @@ export default function Promokodlar() {
                 </p>
 
                 <div className="font-medium">
-                  {coupon.amount.toLocaleString()} so‘m
+                  {((coupon.amount < 1000 ? coupon.amount * 1000 : coupon.amount).toLocaleString())} so‘m
                 </div>
               </div>
 
