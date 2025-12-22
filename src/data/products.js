@@ -118,4 +118,34 @@ export const categories = [
   { id: 'Sog\'liq', name: 'Sog\'liq' }
 ]
 
+// Try to fetch latest products from backend API and replace local data at runtime.
+// This keeps existing imports (which receive the `products` array reference) working
+// while allowing the app to use server-provided prices when available.
+if (typeof window !== 'undefined' && window.fetch) {
+  try {
+    fetch('https://api.vita-balans.uz/products')
+      .then(res => res.json())
+      .then(data => {
+        if (!Array.isArray(data)) return
+        const mapped = data.map(item => ({
+          id: item.id || item._id || item.slug || String(item.code || Math.random()),
+          title: item.title || item.name || item.product_name || 'No title',
+          price: Number(item.price) || Number(item.current_price) || 0,
+          oldPrice: item.oldPrice || item.list_price || item.previous_price || null,
+          available: item.available !== undefined ? Boolean(item.available) : true,
+          description: item.description || item.desc || '',
+          image: item.image || (item.images && item.images[0]) || logo,
+          category: item.category || item.categoryName || 'Boshqa',
+          rating: Number(item.rating) || 4.8
+        }))
+
+        // replace contents of the exported array so existing references update
+        products.splice(0, products.length, ...mapped)
+      })
+      .catch(() => { })
+  } catch (e) {
+    // ignore in environments without fetch
+  }
+}
+
 export default products

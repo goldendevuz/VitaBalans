@@ -22,6 +22,10 @@ function Checkout() {
   
   const [loading, setLoading] = useState(false)
   const [placedOrder, setPlacedOrder] = useState(null)
+  const [couponCode, setCouponCode] = useState('')
+  const [applyingCoupon, setApplyingCoupon] = useState(false)
+  const [appliedCoupon, setAppliedCoupon] = useState(null)
+  const [couponError, setCouponError] = useState(null)
 
   useEffect(() => {
     if (user) {
@@ -43,6 +47,16 @@ function Checkout() {
   }, [])
 
   const subtotal = navItems.reduce((s, it) => s + (it.price || 0) * (it.qty || 1), 0)
+
+  const discountAmount = React.useMemo(() => {
+    if (!appliedCoupon) return 0
+    if (appliedCoupon.type === 'percent') {
+      return Math.round((subtotal * (Number(appliedCoupon.amount) || 0)) / 100)
+    }
+    return Number(appliedCoupon.amount) || 0
+  }, [appliedCoupon, subtotal])
+
+  const totalAfterDiscount = Math.max(0, subtotal - discountAmount)
 
   const maskCard = (num) => {
     const n = (num || '').replace(/\s+/g, '')
@@ -140,15 +154,49 @@ function Checkout() {
       return
     }
     setLoading(true)
-    await new Promise((r) => setTimeout(r, 900))
-    setLoading(false)
+
+    // Re-validate coupon with API at placement time and compute final discount
+    let finalCoupon = appliedCoupon
+    let finalDiscount = discountAmount
+    try {
+      if (appliedCoupon) {
+        const res = await fetch('https://api.vita-balans.uz/coupons')
+        if (res.ok) {
+          const list = await res.json()
+          const found = (Array.isArray(list) ? list : []).find(c => {
+            const a = String(c.id || c.name || c.code || '').toLowerCase()
+            const b = String(appliedCoupon.id || appliedCoupon.name || appliedCoupon.code || '').toLowerCase()
+            return a === b
+          })
+          if (found) {
+            finalCoupon = found
+            if (found.type === 'percent') finalDiscount = Math.round((subtotal * (Number(found.amount) || 0)) / 100)
+            else finalDiscount = Number(found.amount) || 0
+            setAppliedCoupon(found)
+            setCouponError(null)
+          } else {
+            // coupon no longer valid — remove it and continue
+            finalCoupon = null
+            finalDiscount = 0
+            setAppliedCoupon(null)
+            setCouponError('Kupon yaroqsiz yoki ishlatilgan')
+          }
+        }
+      }
+    } catch (e) {
+      // if validation fails, keep earlier applied coupon (best-effort)
+      console.warn('coupon validate error', e)
+    }
+
+    const finalTotal = Math.max(0, subtotal - finalDiscount)
 
     const orders = JSON.parse(localStorage.getItem('vb_orders') || '[]')
     const order = {
       id: Date.now(),
       items: navItems,
       customer: { firstName, lastName, phone, address },
-      total: subtotal,
+      total: finalTotal,
+      coupon: finalCoupon ? { id: finalCoupon.id, code: finalCoupon.name || finalCoupon.code, type: finalCoupon.type, amount: finalCoupon.amount } : null,
       payment: { method: 'card', card: maskCard(cardNumber) },
       when: Date.now(),
     }
@@ -178,6 +226,33 @@ function Checkout() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  const handleApplyCoupon = async () => {
+    const code = (couponCode || '').trim()
+    if (!code) {
+      setCouponError('Kupon kod kiriting')
+      return
+    }
+    setApplyingCoupon(true)
+    setCouponError(null)
+    try {
+      const res = await fetch('https://api.vita-balans.uz/coupons')
+      if (!res.ok) throw new Error('API error')
+      const list = await res.json()
+      const found = (Array.isArray(list) ? list : []).find(c => (c.name || c.code || '').toLowerCase() === code.toLowerCase())
+      if (!found) {
+        setAppliedCoupon(null)
+        setCouponError('Kupon topilmadi')
+      } else {
+        setAppliedCoupon(found)
+        setCouponError(null)
+      }
+    } catch (e) {
+      setCouponError('Kuponni tekshirishda xatolik')
+    } finally {
+      setApplyingCoupon(false)
+    }
+  }
+
   return (
     <div className="container" style={{ padding: '24px' }}>
       <h2 style={{ marginBottom: 16 }}>Checkout</h2>
@@ -202,6 +277,22 @@ function Checkout() {
                     <div style={{ fontWeight: 700 }}>{((it.price || 0) * (it.qty || 1)).toFixed(0)} UZS</div>
                   </div>
                 ))}
+              </div>
+            )}
+          </div>
+
+          <div style={{ background: 'white', borderRadius: 12, padding: 16, boxShadow: '0 6px 18px rgba(15,23,42,0.06)', marginTop: 12 }}>
+            <h3 style={{ margin: '0 0 12px' }}>Promo kod</h3>
+            <div style={{ display: 'flex', gap: 8 }}> 
+              <input className="form-input" placeholder="Kupon kod" value={couponCode} onChange={(e) => setCouponCode(e.target.value)} />
+                <button className="btn" onClick={handleApplyCoupon} disabled={applyingCoupon}>{applyingCoupon ? 'Tekshirilmoqda...' : "Qo'llash"}</button>
+            </div>
+            {couponError && <div style={{ color: '#ef4444', marginTop: 8 }}>{couponError}</div>}
+            {appliedCoupon && (
+              <div style={{ marginTop: 12, padding: 10, borderRadius: 8, background: 'linear-gradient(135deg,#ecfdf5,#f0fdfa)' }}>
+                <div style={{ fontWeight: 700 }}>{appliedCoupon.name || appliedCoupon.code}</div>
+                <div style={{ color: '#64748b' }}>{appliedCoupon.description}</div>
+                <div style={{ marginTop: 8, fontWeight: 700 }}>{appliedCoupon.type === 'percent' ? `-${appliedCoupon.amount}%` : `-${appliedCoupon.amount} so'm`}</div>
               </div>
             )}
           </div>
@@ -298,6 +389,16 @@ function Checkout() {
                 <div style={{ borderTop: '1px solid #eef2f7', paddingTop: 12, display: 'flex', justifyContent: 'space-between', fontWeight: 700 }}>
                   <div>Subtotal</div>
                   <div>{subtotal.toFixed(0)} UZS</div>
+                </div>
+                {appliedCoupon && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
+                    <div>Chegirma</div>
+                    <div>-{discountAmount.toFixed(0)} UZS</div>
+                  </div>
+                )}
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 12, fontSize: '1.05rem', fontWeight: 800 }}>
+                  <div>Total</div>
+                  <div>{totalAfterDiscount.toFixed(0)} UZS</div>
                 </div>
               </div>
             )}

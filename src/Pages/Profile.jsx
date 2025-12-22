@@ -9,6 +9,9 @@ function Profile() {
   const [isEditing, setIsEditing] = useState(false)
   const [editData, setEditData] = useState({})
   const [activeTab, setActiveTab] = useState('profile')
+  const [coupons, setCoupons] = useState([])
+  const [loadingCoupons, setLoadingCoupons] = useState(true)
+  const [couponsError, setCouponsError] = useState(null)
   const [showWelcome, setShowWelcome] = useState(false)
   const navigate = useNavigate()
 
@@ -27,6 +30,24 @@ function Profile() {
       }
     } catch(e) {}
   }, [user])
+
+  useEffect(() => {
+    let mounted = true
+    fetch('https://api.vita-balans.uz/coupons')
+      .then(res => res.json())
+      .then(data => {
+        if (!mounted) return
+        setCoupons(Array.isArray(data) ? data : [])
+      })
+      .catch(err => {
+        if (!mounted) return
+        setCoupons([])
+        setCouponsError(err)
+      })
+      .finally(() => mounted && setLoadingCoupons(false))
+
+    return () => { mounted = false }
+  }, [])
 
   const handleLogout = () => {
     logout()
@@ -305,45 +326,49 @@ function Profile() {
           {activeTab === 'promos' && (
             <div>
               <h2 style={{ marginBottom: '32px' }}>Promo kodlar</h2>
-              <div style={{ display: 'grid', gap: '16px' }}>
-                {[
-                  { code: 'VITA10', discount: '10%', desc: 'Barcha mahsulotlar uchun' },
-                  { code: 'WELCOME5', discount: '5%', desc: 'Yangi foydalanuvchilar uchun' },
-                  { code: 'FIRST20', discount: '20%', desc: 'Birinchi buyurtma uchun' },
-                ].map((promo, i) => (
-                  <div key={i} style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '20px',
-                    background: 'linear-gradient(135deg, #ecfdf5, #f0fdfa)',
-                    borderRadius: '12px',
-                    border: '2px dashed #10b981'
-                  }}>
-                    <div>
-                      <div style={{
-                        fontFamily: 'monospace',
-                        fontSize: '1.2rem',
-                        fontWeight: '700',
-                        color: '#059669',
-                        marginBottom: '4px'
-                      }}>
-                        {promo.code}
-                      </div>
-                      <div style={{ color: '#64748b', fontSize: '0.9rem' }}>{promo.desc}</div>
-                    </div>
-                    <div style={{
-                      background: '#10b981',
-                      color: 'white',
-                      padding: '8px 16px',
-                      borderRadius: '8px',
-                      fontWeight: '700'
+              {loadingCoupons ? (
+                <div className="card" style={{ padding: 12 }}>Yuklanmoqda...</div>
+              ) : couponsError ? (
+                <div className="card" style={{ padding: 12 }}>Kuponlarni yuklashda xatolik</div>
+              ) : coupons.length === 0 ? (
+                <div className="card" style={{ padding: 12 }}>Kupon topilmadi</div>
+              ) : (
+                <div style={{ display: 'grid', gap: '16px' }}>
+                  {coupons.map((c, i) => (
+                    <div key={c.id || i} style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '20px',
+                      background: 'linear-gradient(135deg, #ecfdf5, #f0fdfa)',
+                      borderRadius: '12px',
+                      border: '2px dashed #10b981'
                     }}>
-                      -{promo.discount}
+                      <div>
+                        <div style={{
+                          fontFamily: 'monospace',
+                          fontSize: '1.2rem',
+                          fontWeight: '700',
+                          color: '#059669',
+                          marginBottom: '4px'
+                        }}>
+                          {c.name || c.code || c.id}
+                        </div>
+                        <div style={{ color: '#64748b', fontSize: '0.9rem' }}>{c.description}</div>
+                      </div>
+                      <div style={{
+                        background: '#10b981',
+                        color: 'white',
+                        padding: '8px 16px',
+                        borderRadius: '8px',
+                        fontWeight: '700'
+                      }}>
+                        {c.type === 'percent' ? `-${c.amount}%` : `-${c.amount} so'm`}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
