@@ -7,68 +7,75 @@ export default function Promokodlar() {
 
   useEffect(() => {
     let mounted = true
-    import('../lib/api').then(m => m.apiFetch('https://api.vita-balans.uz/coupons'))
-      .then(res => res.json())
+
+    fetch('https://api.vita-balans.uz/api/coupons', {
+      headers: {
+        Accept: 'application/json',
+      },
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`API xato: ${res.status}`)
+        }
+        return res.json()
+      })
       .then(data => {
         if (!mounted) return
+
         const arr = Array.isArray(data) ? data : []
         const normalized = arr.map(item => ({
           ...item,
-          // some APIs may return `amout` (typo) — prefer `amount`, fall back to `amout` and coerce to number
-          amount: Number(item.amount ?? item.amout ?? 0)
+          amount: Number(item.amount ?? item.amout ?? 0),
         }))
+
         setCoupons(normalized)
       })
       .catch(err => {
         if (!mounted) return
-        // Require coupons from API only: surface the error and clear coupons
         setError(err)
         setCoupons([])
       })
       .finally(() => mounted && setLoading(false))
 
-    return () => { mounted = false }
+    return () => {
+      mounted = false
+    }
   }, [])
 
   return (
     <div className="container">
-      <nav style={{ margin: '18px 0', fontSize: '0.95rem', color: 'var(--primary-600)' }}>
-        <a href="/">Bosh sahifa</a> » <span style={{ marginLeft: 6 }}>Promokodlar</span>
+      <nav style={{ margin: '18px 0' }}>
+        <a href="/">Bosh sahifa</a> » Promokodlar
       </nav>
 
-      <h1 style={{ margin: '8px 0 20px', fontSize: '1.6rem' }}>Promokodlar</h1>
+      <h1>Promokodlar</h1>
 
       {loading ? (
-        <div className="card" style={{ padding: 12 }}>Yuklanmoqda...</div>
+        <div className="card">Yuklanmoqda...</div>
       ) : error ? (
-        <div className="card" style={{ padding: 12 }}>
-          <div style={{ fontWeight: 600, marginBottom: 8 }}>Xatolik yuz berdi</div>
-          <div style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', whiteSpace: 'pre-wrap' }}>{error.message || String(error)}</div>
+        <div className="card">
+          <b>Xatolik:</b> {error.message}
         </div>
       ) : coupons.length === 0 ? (
-        <div className="card" style={{ padding: 12 }}>Kupon topilmadi</div>
+        <div className="card">Kupon topilmadi</div>
       ) : (
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           {coupons.map(c => (
-            <div key={c.id} className="card product-card" style={{ padding: 12, minWidth: 220 }}>
-              <div>
-                <strong style={{ display: 'block', marginBottom: 6 }}>{c.name}</strong>
-                <div style={{ color: 'var(--text-secondary)', marginBottom: 8, whiteSpace: 'pre-line' }}>{c.description}</div>
-                <div style={{ fontSize: '0.95rem' }}>{Number(c.amount || 0).toFixed(0)} so'm</div>
-              </div>
-              <div style={{ marginTop: 12, display: 'flex', justifyContent: 'flex-end' }}>
-                <button
-                  className="btn"
-                  onClick={() => navigator.clipboard && navigator.clipboard.writeText(c.name)}
-                >
-                  Nusxa
-                </button>
-              </div>
+            <div key={c.id} className="card" style={{ minWidth: 220 }}>
+              <strong>{c.name}</strong>
+              <p>{c.description}</p>
+              <div>{c.amount} so‘m</div>
+              <button
+                onClick={() =>
+                  navigator.clipboard?.writeText(c.name)
+                }
+              >
+                Nusxa
+              </button>
             </div>
           ))}
         </div>
       )}
-
     </div>
   )
 }
