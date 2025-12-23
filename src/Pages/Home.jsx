@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import ProductCard from '../Components/ProductCard'
+import Spinner from '../Components/Spinner'
 import useProducts from '../hooks/useProducts'
 import { FaArrowRight, FaLeaf, FaHeart, FaStar, FaShieldAlt, FaSearch } from 'react-icons/fa'
 
@@ -195,7 +196,7 @@ function Home() {
       {/* All Products */}
       <section className="products container">
         <h2>Mahsulotlar</h2>
-        {loading && <div className="card p-4">Yuklanmoqda...</div>}
+        {loading && <Spinner />}
         {!loading && error && <div className="card p-4 text-red-600">Xato: {error.message}</div>}
         {!loading && !error && (!products || products.length === 0) && (
           <div className="card p-4 text-sm" style={{ marginBottom: 12 }}>

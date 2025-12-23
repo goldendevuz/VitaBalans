@@ -32,7 +32,7 @@ function Header() {
         <nav className={`main-nav ${open ? 'open' : ''}`}>
           <Link to="/" onClick={() => setOpen(false)}>Bosh sahifa</Link>
           <Link to="/brands" onClick={() => setOpen(false)}>Brendlar</Link>
-          <Link to="/toplam" onClick={() => setOpen(false)}>To'plamlar</Link>
+          <Link to="/blog" onClick={() => setOpen(false)}>Blog</Link>
           <Link to="/about" onClick={() => setOpen(false)}>Biz haqimizda</Link>
         </nav>
 

@@ -5,6 +5,7 @@ import useProducts from '../hooks/useProducts'
 import { CartContext } from '../contexts/CartContext'
 import { AuthContext } from '../contexts/AuthContext'
 import ProductCard from '../Components/ProductCard'
+import Spinner from '../Components/Spinner'
 
 function ProductDetail() {
     const { id } = useParams()
@@ -30,7 +31,7 @@ function ProductDetail() {
     if (loading) {
         return (
             <div className="container" style={{ padding: '80px 24px', textAlign: 'center' }}>
-                <h3>Yuklanmoqda...</h3>
+                <Spinner size={50} />
             </div>
         )
     }
@@ -76,21 +77,23 @@ function ProductDetail() {
     return (
         <div className="container" style={{ padding: '40px 24px 80px' }}>
             {/* JSON-LD Product schema for better indexing */}
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "Product",
-                "name": product.title,
-                "image": Array.isArray(product.image) ? product.image : [product.image],
-                "description": product.description,
-                "sku": product.id,
-                "offers": {
-                    "@type": "Offer",
-                    "url": `https://vitabalans.uz/product/${product.id}`,
-                    "priceCurrency": "UZS",
-                    "price": product.price,
-                    "availability": product.available ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
-                }
-            }) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "Product",
+                    "name": product.title,
+                    "image": Array.isArray(product.image) ? product.image : [product.image],
+                    "description": product.description,
+                    "sku": product.id,
+                    "offers": {
+                        "@type": "Offer",
+                        "url": `https://vitabalans.uz/product/${product.id}`,
+                        "priceCurrency": "UZS",
+                        "price": product.price,
+                        "availability": product.available ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+                    }
+                })
+            }} />
             {/* Notification */}
             {showNotification && (
                 <div style={{
@@ -181,8 +184,8 @@ function ProductDetail() {
 
                     {/* Rating */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-                            <div style={{ color: '#374151', fontWeight: 700, fontSize: '1rem' }}>{avgRating} / 5</div>
-                            <span style={{ color: '#64748b' }}>({reviews.length} ta sharh)</span>
+                        <div style={{ color: '#374151', fontWeight: 700, fontSize: '1rem' }}>{avgRating} / 5</div>
+                        <span style={{ color: '#64748b' }}>({reviews.length} ta sharh)</span>
                     </div>
 
                     <p style={{ fontSize: '1.1rem', color: '#475569', lineHeight: 1.7, marginBottom: '24px' }}>

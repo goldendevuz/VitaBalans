@@ -357,6 +357,58 @@ h4 {
   }
 }
 
+/* Add to cart button click animation */
+.product-card .btn:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+.product-card .btn {
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card .btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Button pulse animation class */
+.btn-pulse {
+  animation: btnPulse 0.4s ease-out;
+}
+
+@keyframes btnPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+
+  50% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* Spinner loading animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  display: inline-block;
+}
+
 /* ===== Product Card Styles ===== */
 .product-card {
   width: 300px;

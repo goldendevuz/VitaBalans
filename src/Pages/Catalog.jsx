@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import useProducts from '../hooks/useProducts'
 import ProductCard from '../Components/ProductCard'
+import Spinner from '../Components/Spinner'
 import { FaSearch, FaArrowRight } from 'react-icons/fa'
 
 function Catalog() {
@@ -81,13 +82,6 @@ function Catalog() {
           pointerEvents: 'none'
         }} />
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ marginBottom: '8px' }}>
-            <Link to="/" style={{ color: '#10b981', textDecoration: 'none', fontWeight: 600 }}>
-              Bosh sahifa
-            </Link>
-            <span style={{ color: '#10b981', margin: '0 8px' }}>»</span>
-            <span style={{ color: '#0f172a', fontWeight: 600 }}>Katalog</span>
-          </div>
           <h1 style={{
             fontSize: '2.8rem',
             marginBottom: '16px',
@@ -151,9 +145,7 @@ function Catalog() {
 
       {/* Main Content */}
       <div className="container" style={{ padding: '40px 24px 80px' }}>
-        {loading && (
-          <div className="card" style={{ padding: 20, marginBottom: 16 }}>Yuklanmoqda...</div>
-        )}
+        {loading && <Spinner />}
         {!loading && error && (
           <div className="card" style={{ padding: 20, marginBottom: 16, color: '#b91c1c' }}>
             Mahsulotlarni yuklashda xato: {error.message}

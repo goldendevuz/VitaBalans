@@ -12,8 +12,8 @@ import Cart from './Pages/Cart'
 import Checkout from './Pages/Checkout'
 import Catalog from './Pages/Catalog'
 import ProductDetail from './Pages/ProductDetail'
-import Toplam from './Pages/Toplam'
-import ToplamCategory from './Pages/ToplamCategory'
+import Blog from './Pages/Blog'
+import BlogDetail from './Pages/BlogDetail'
 import ProductsRailway from './Pages/ProductsRailway'
 import NotFound from './Pages/NotFound'
 import AuthProvider from './contexts/AuthContext'
@@ -48,8 +48,8 @@ function App() {
             <Route path='checkout' element={<Checkout />} />
             <Route path='catalog' element={<Catalog />} />
             <Route path='railway-products' element={<ProductsRailway />} />
-            <Route path='toplam' element={<Toplam />} />
-            <Route path='toplam/:id' element={<ToplamCategory />} />
+            <Route path='blog' element={<Blog />} />
+            <Route path='blog/:id' element={<BlogDetail />} />
             <Route path='product/:id' element={<ProductDetail />} />
           </Route>
           <Route path='*' element={<NotFound />} />

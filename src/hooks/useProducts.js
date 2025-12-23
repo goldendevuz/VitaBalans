@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { apiFetch, API_BASE } from '../lib/api'
+import localProducts, { categories as localCategories } from '../data/products'
 
 // Hook to load products from backend API with robust fallbacks.
 export default function useProducts({ page = 1, limit = 20 } = {}) {
@@ -63,8 +64,11 @@ export default function useProducts({ page = 1, limit = 20 } = {}) {
       setCategories(cats)
       setLoading(false)
     } catch (e) {
-      console.error('useProducts error:', e)
-      setError(e)
+      console.error('useProducts error, using local fallback:', e)
+      // Fallback to local products when API fails
+      setProducts(localProducts)
+      setCategories(localCategories)
+      setError(null) // Don't show error since we have fallback data
       setLoading(false)
     }
   }, [page, limit])
