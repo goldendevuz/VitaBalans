@@ -257,7 +257,7 @@ function Profile() {
               ) : coupons.length === 0 ? (
                 <div style={{ padding: '30px 10px', textAlign: 'center', color: '#64748b' }}>
                   <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🎟️</div>
-                  <p style={{ fontSize: '0.9rem' }}>Hali ishlatilgan promo kod yo'q</p>
+                  <p style={{ fontSize: '0.9rem' }}>faol promo kod yo'q</p>
                 </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -307,7 +307,7 @@ function Profile() {
                         fontWeight: '600',
                         fontSize: '0.8rem'
                       }}>
-                        -{Number(c.amount || 0).toLocaleString()} so'm
+                        -{c.type === 'percent' ? c.amount + '%' : Number(c.amount || 0).toLocaleString() + "so'm"}
                       </div>
                     </div>
                   ))}
